@@ -2,8 +2,9 @@
 
 {% block content %}
     <h1 class="text-center">All POST ..</h1>
-        {% for post in posts %}
-            <p><a href="{% url 'home:post_detail' post.user.id post.slug %}">{{ post.body|truncatewords:8 }}</a></p>
-        {% endfor %}
-
+        <div class="card">
+            {% for post in posts %}
+                <p><a href="{% url 'home:post_detail' post.user.id post.slug %}">{{ post.body|truncatewords:8 }}</a></p>
+            {% endfor %}
+        </div>
 {% endblock %}
