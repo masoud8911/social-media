@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Home page ..</h1>
+    <h1 class="text-center">All POST ..</h1>
+        {% for post in posts %}
+            <p><a href="{% url 'home:post_detail' post.user.id post.slug %}">{{ post.body|truncatewords:8 }}</a></p>
+        {% endfor %}
+
 {% endblock %}
