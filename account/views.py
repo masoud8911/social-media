@@ -35,6 +35,10 @@ class UserRegisterView(View):
 class UserLoginView(View):
     form_class = UserLoginForm
 
+    def setup(self, request, *args, **kwargs):
+        self.next = request.GET.get('next')
+        return super(UserLoginView, self).setup(request, *args, **kwargs)
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('home:index')
@@ -52,6 +56,8 @@ class UserLoginView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'User login is successfully', 'success')
+                if self.next:
+                    return redirect(self.next)
                 return redirect('home:index')
             messages.error(request, 'Username or password is wrong', 'warning')
         return render(request, 'account/login.html', {'form': form})
